@@ -1,23 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import ImageName from './Components/ImageName';
+import APITemplate from './Components/APITemplate';
+import React, { useState } from 'react';
+import Types from './Components/Types';
+import StatsPanel from './Components/StatsPanel';
 
 function App() {
+  const [id, setId] = useState(1);
+  const [stats, setStats] = useState(true);
+  let pokemonJSON = APITemplate(id);
+
+  const handleChange = (newId) => {
+    setId(newId);
+    pokemonJSON = APITemplate(newId);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>
+          Exercise 5: Pokedex
+        </h1>
       </header>
+      <body>
+        <div className='flex-row'>
+          <ImageName json={pokemonJSON} />
+          <Types json={pokemonJSON} />
+          <button disabled={() => (id === 1) ? true : false} onClick={handleChange(id-1)}>Previous</button>
+          <button onClick={handleChange(id+1)}>Next</button>
+          <StatsPanel json={pokemonJSON} stats={stats} />
+          <button onClick={() => setStats(true)} className='bg-green-500 rounded-sm'>Info</button>
+          <button onClick={() => setStats(false)} className='bg-gray-300 rounded-sm'>Moves</button>
+        </div>
+      </body>
     </div>
   );
 }

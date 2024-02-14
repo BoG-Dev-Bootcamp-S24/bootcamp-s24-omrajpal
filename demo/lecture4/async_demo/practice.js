@@ -9,7 +9,6 @@ document.getElementById('nameForm').addEventListener('submit', async (event) => 
     const genderizeUrl = `https://api.genderize.io?name=${name}`;
     //nationality-
     const nationalizeUrl = `https://api.nationalize.io?name=${name}`;
-<<<<<<< HEAD
 
     // Students will write async code here to fetch data from the APIs
     // and update the DOM with the results.
@@ -57,7 +56,6 @@ document.getElementById('nameForm').addEventListener('submit', async (event) => 
       ageOutput.innerHTML = "Failed to fetch the facts.";
     });
 });
-=======
   
     //solution-
     // try {
@@ -87,6 +85,6 @@ document.getElementById('nameForm').addEventListener('submit', async (event) => 
     //   document.getElementById('genderResult').textContent = 'Error fetching data';
     //   document.getElementById('nationalityResult').textContent = 'Error fetching data';
     // }
-  });
+  // });
   
->>>>>>> 4c77f278ce62f36cb76905953f799ba72138cdac
+  

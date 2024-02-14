@@ -5,7 +5,7 @@ import TodoListSolution from './TodoListSolution';
 function App() {
   return (
     <div className="App">
-      {/* <TodoList /> */}
+      <TodoList />
       <TodoListSolution />
     </div>
   );

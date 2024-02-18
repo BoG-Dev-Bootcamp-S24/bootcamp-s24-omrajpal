@@ -1,37 +1,61 @@
 import logo from './logo.svg';
 import './App.css';
 import ImageName from './Components/ImageName';
-import APITemplate from './Components/APITemplate';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Types from './Components/Types';
 import StatsPanel from './Components/StatsPanel';
 
 function App() {
   const [id, setId] = useState(1);
   const [stats, setStats] = useState(true);
-  let pokemonJSON = APITemplate(id);
+  const [loading, setLoading] = useState(true);
+  const [pokemonJSON, setPokemonJSON] = useState(null);
 
-  const handleChange = (newId) => {
-    setId(newId);
-    pokemonJSON = APITemplate(newId);
+  async function APITemplate(id) {
+    const URL = "https://pokeapi.co/api/v2/pokemon";
+    setLoading(true);
+    try {
+        const response = await fetch(`${URL}/${id}/`);
+        console.log('response', response);
+        const pokemonJSON = await response.json();
+        setPokemonJSON(pokemonJSON);
+        console.log('pokemonJSON', pokemonJSON);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setPokemonJSON(null);
+    }
+    setLoading(false);
   }
+
+  useEffect(() => {
+    APITemplate(id);
+  }, [id])
+
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>
+      <body>
+        <h1 className='text-4xl font-bold py-5'>
           Exercise 5: Pokedex
         </h1>
-      </header>
-      <body>
-        <div className='flex-row'>
-          <ImageName json={pokemonJSON} />
-          <Types json={pokemonJSON} />
-          <button disabled={() => (id === 1) ? true : false} onClick={handleChange(id-1)}>Previous</button>
-          <button onClick={handleChange(id+1)}>Next</button>
-          <StatsPanel json={pokemonJSON} stats={stats} />
-          <button onClick={() => setStats(true)} className='bg-green-500 rounded-sm'>Info</button>
-          <button onClick={() => setStats(false)} className='bg-gray-300 rounded-sm'>Moves</button>
+        <div className='flex flex-row justify-center'>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+            <div className='flex-col px-16'>
+              <ImageName json={pokemonJSON} />
+              <Types json={pokemonJSON} />
+              <button className='bg-gray-300 rounded-md px-6 py-1 mx-2 my-1 text-3xl' onClick={() => {if(id !== 1) {setId(id - 1)}}}>&lt;</button>
+              <button className='bg-gray-300 rounded-md px-6 py-1 mx-2 my-1 text-3xl' onClick={() => setId(id + 1)}>&gt;</button>
+            </div>
+            <div className='flex-col px-16'>
+              <StatsPanel json={pokemonJSON} stats={stats} />
+              <button onClick={() => setStats(true)} className='bg-green-500 rounded-md m-5 px-7 py-2 mt-10'>Info</button>
+              <button onClick={() => setStats(false)} className='bg-gray-300 rounded-md m-5 px-7 py-2 mt-10'>Moves</button>
+            </div>
+            </>
+          )}
         </div>
       </body>
     </div>

@@ -9,6 +9,8 @@ function App() {
   const [id, setId] = useState(1);
   const [stats, setStats] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [info, setInfo] = useState('#4CAF50'); 
+  const [moves, setMoves] = useState('#E0E0E0');
   const [pokemonJSON, setPokemonJSON] = useState(null);
 
   async function APITemplate(id) {
@@ -51,8 +53,8 @@ function App() {
             </div>
             <div className='flex-col px-16'>
               <StatsPanel json={pokemonJSON} stats={stats} />
-              <button onClick={() => setStats(true)} className='bg-green-500 rounded-md m-5 px-7 py-2 mt-10'>Info</button>
-              <button onClick={() => setStats(false)} className='bg-gray-300 rounded-md m-5 px-7 py-2 mt-10'>Moves</button>
+              <button onClick={() => {setStats(true); setInfo('#4CAF50'); setMoves('#E0E0E0')}} style={{ backgroundColor: info }} className='rounded-md m-5 px-7 py-2 mt-10'>Info</button>
+              <button onClick={() => {setStats(false); setInfo('#E0E0E0'); setMoves('#4CAF50')}} style={{ backgroundColor: moves }} className='rounded-md m-5 px-7 py-2 mt-10'>Moves</button>
             </div>
             </>
           )}

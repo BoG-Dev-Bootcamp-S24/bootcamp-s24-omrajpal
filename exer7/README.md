@@ -1,3 +1,5 @@
+# SUBMISSION LINK TO GOOGLE DRIVE VID: https://drive.google.com/file/d/1uUS7DDAMc5cYSdFnjzfKLo6WsxD47x54/view?usp=share_link
+
 # Exercise 7 - Train Tickets DB
 
 ## Description
